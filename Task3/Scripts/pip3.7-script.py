@@ -1,4 +1,4 @@
-#!C:\ycheba\python\python\main\Scripts\python.exe
+#!C:\ycheba\python\python\Task3\Scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'pip==19.0.3','console_scripts','pip3.7'
 __requires__ = 'pip==19.0.3'
 import re
