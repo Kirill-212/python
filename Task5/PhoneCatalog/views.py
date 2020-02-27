@@ -6,7 +6,7 @@ from django.template import loader
 
 
 # def index(request):
-#      return HttpResponse("хуй")
+#      return HttpResponse("Hello World")
 
 # def index(request):
 #     latest_question_list = table.objects.order_by('-pub_date')[:1]
