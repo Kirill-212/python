@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% block main %}
+
+    <table class="table table-dark table-hover" style="font-size: 15px">
+    <tr>
+        <td>
+            Наименование иностранной валюты
+        </td>
+        <td>
+            Количество единиц иностранной валюты, буквенный код валюты
+        </td>
+        <td>
+            Официальный курс
+        </td>
+    </tr>
+    {% for i in currency %}
+        <tr>
+        <td>
+        {{ i.name_currency  }}
+        </td>
+        <td>
+          {{  i.value_name}}
+        </td>
+        <td>
+          {{  i.value}}
+        </td>
+        </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

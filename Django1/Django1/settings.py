@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -100,6 +101,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'kirya.bolvako@gmail.com'
+EMAIL_HOST_PASSWORD = 'Kirill_super228'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
 
 
 # Internationalization
@@ -115,7 +121,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 

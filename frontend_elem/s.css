@@ -1,0 +1,51 @@
+            *{
+                box-sizing: border-box;
+            }
+            html, body {
+                padding: 0;
+                margin: 0;
+                font-family:  DejaVu Sans Mono, monospace;
+            }
+ 
+            body {
+                font-size: 1.1em;
+                display: flex;
+                flex-direction: column;
+            }
+ 
+            main {
+                display: flex;
+                flex-direction: column;
+            }
+ 
+            article {
+				background-color: #DBDBDB;
+                flex: 2 2 12em;
+                padding: 1em;
+            }
+ 
+            nav, aside {
+                flex: 1;
+                background-color: #DBDBDB;
+            }
+ 
+            nav {
+                order: -1;
+            }
+             
+            header, footer {
+                flex: 0 0 0;
+                background-color: #58CCEE;
+            }
+             
+            @media screen and (min-width: 600px) {
+                 
+                body{
+                    min-height: 100vh;
+                }
+                main {
+                    flex-direction: row;
+                    min-height: 100%;
+                    flex: 1 1 auto;
+                }
+            }

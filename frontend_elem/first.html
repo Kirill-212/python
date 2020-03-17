@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="s.css">
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+         ['Element', 'Density', { role: 'style' }, { role: 'annotation' } ],
+         ['Copper', 8.94, '#b87333', 'Cu' ],
+         ['Silver', 10.49, 'silver', 'Ag' ],
+         ['Gold', 19.30, 'gold', 'Au' ],
+         ['Platinum', 21.45, 'color: #e5e4e2', 'Pt' ]
+      ]);
+
+        var options = {
+          title: 'Company Performance',
+          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+	<title></title>
+</head>
+    <body>
+ <div id="chart_div" style="width: 100%; height: 500px;"></div>
+        <header>
+            <p>Header</p>
+        </header>
+        <main>
+            <article>
+            	
+                <h1>Что такое Lorem Ipsum?</h1>
+                <p>Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной 
+                "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянныLorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной 
+                "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию 
+                размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без 
+                заметных изменений пять веков, но и перешагнул в электронный дизайн. Его </p>
+            </article>
+            <nav>
+                <p>Navigation</p>
+            </nav>
+            <aside>
+                <p>Sidebar</p>
+            </aside>
+        </main>
+        <footer>
+            <p>Footer</p>
+        </footer>
+    </body>
+</html>

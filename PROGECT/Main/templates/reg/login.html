@@ -1,0 +1,16 @@
+{% extends  'main.html' %}
+{% load crispy_forms_tags %}
+{% block main %}
+<h4 class="card-title">Log in to your account</h4>
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}">
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-outline-dark btn-block">
+        Log in
+    </button>
+    <a href=".." class="btn btn-outline-danger btn-block">
+        Back to home
+    </a>
+</form>
+{% endblock %}

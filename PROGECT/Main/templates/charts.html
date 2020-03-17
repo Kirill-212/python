@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script>
+
+
+
+
+    {% block jquery %}
+            var endpoint = 'chart/date';
+            var labels=[];
+            var DefaultDate=[];
+            var EUR;
+            var USD;
+            var Number;
+            function valueof(s) {
+                Number=s;
+                console.log(EUR[Number]);
+            }
+
+
+            $.ajax(
+                {
+                    method:"GET",
+                    url:endpoint,
+                    success:function (date) {
+                        labels=date.name_country;
+                        EUR=date.EUR;
+                        USD=date.USD;
+                        console.log(USD);
+                        console.log(EUR);
+
+                        DefaultDate=date.value;
+
+                        var ctx1 = document.getElementById('myChart1').getContext('2d');
+                        var myChart = new Chart(ctx1, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: '# value currency',
+                                    data: DefaultDate,
+
+                                }]
+                            }
+                        })
+
+                    },
+                    error:function (error_date) {
+                        console.log("error");
+                        console.log(error_date)
+                    }
+                }
+            );
+            function valueof(s) {
+                var ctx2 = document.getElementById('myChart2').getContext('2d');
+                        var myChart = new Chart(ctx2, {
+                            type: 'line',
+                            data: {
+                                labels: [1,2,3,4,5,6,7,8,9,10,11,12],
+                                datasets: [{
+                                    label: '# of Votes',
+                                    data: EUR[s],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                        var ctx3 = document.getElementById('myChart3').getContext('2d');
+                        var myChart1 = new Chart(ctx3, {
+                            type: 'line',
+                            data: {
+                                labels: [1,2,3,4,5,6,7,8,9,10,11,12],
+                                datasets: [{
+                                    label: '# of Votes',
+                                    data: USD[s],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+            }
+        {% endblock %}
+    </script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div url-endpoint="{% url "api-date" %}"></div>
+
+<div class="row">
+  <div class=" col-lg-4"><canvas id="myChart1" width="50" height="50"></canvas></div>
+    <div class=" col-lg-4"><canvas id="myChart2" width="250" height="250"></canvas></div>
+    <div class=" col-lg-4"><canvas id="myChart3" width="250" height="250"></canvas></div>
+</div>
+<div class="row">
+    <input type="button" onclick="valueof('2019')" value="2019">
+    <input type="button" onclick="valueof('2018')" value="2018">
+    <input type="button" onclick="valueof('2017')" value="2017">
+        <input type="button" onclick="valueof('2016')" value="2016">
+    <input type="button" onclick="valueof('2015')" value="2015">
+    <input type="button" onclick="valueof('2014')" value="2014">
+        <input type="button" onclick="valueof('2013')" value="2013">
+    <input type="button" onclick="valueof('2012')" value="2012">
+    <input type="button" onclick="valueof('2011')" value="2011">
+</div>
+
+<script>
+
+
+</script>
+</body>
+</html>

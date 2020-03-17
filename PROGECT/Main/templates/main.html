@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+     <script type="text/javascript" src="{% static 'js/first.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container bg-dark text-white">
+                 <div class="row">
+                     <div class="col-sm-3">
+                         <div id="_time">
+                         </div>
+                     </div>
+                     <div class="col-sm-6">
+                         <h3>
+                             Официальный курс белорусского рубля по отношению к иностранным валютам
+                         </h3>
+                     </div>
+                     <div class="col-sm-3">{% if user.is_authenticated %}
+                <p class="text-right">
+                    Hello, {{ user.username }}
+                    <a href="/Main/logout">Log out</a> |
+                    <a href="/Main/password-change">
+                        Change password
+                    </a>
+                </p>
+            {% else %}
+                <p class="text-right">
+                    <a href="/Main/login">Log in</a> |
+                    <a href="/Main/register">Register</a>
+                </p>
+            {% endif %}
+                </div>
+                 </div>
+            </div>
+
+    </nav>
+
+    <main class="main">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-1 order-lg-1 order-3">//новигация
+
+                </div>
+                <div class="col-lg-8  col-md-8 order-lg-2 order-1">
+                    {% block main %}
+                    {% endblock %}
+
+                </div>
+                <div class="col-lg-3  col-md-4 order-lg-3 order-2 ">
+                                                <h4>Chat</h4>
+                                                {% if user.is_authenticated %}
+                                            <form action="post/" method="post">
+                                            {% csrf_token %}
+                                            <div class="input-group mb-3">
+                                              <input type="text"
+                                                     class="form-control"
+                                                     placeholder="Your message"
+                                                     name="message"/>
+                                              <div class="input-group-append">
+                                                <input class="btn btn-success"
+                                                        type="submit"
+                                                        value="Send"/>
+                                                              </div>
+                                                            </div>
+                                                        </form>
+                                                {% endif %}
+
+
+
+                                            <div id="history">
+                                            {% for message in latest_messages %}
+                                                <div class="card">
+                                                <div class="card-body">
+                                                    <strong>
+                                                        {{ message.author.username }}
+                                                    </strong>
+                                                    <br/>
+                                                    <em>
+                                                        {{ message.pub_date|date:'Y-m-d H:i:s' }}
+                                                    </em>
+                                                    <br/>
+                                                    {{ message.message }}
+                                                </div>
+                                                </div>
+                                                <br/>
+                                            {% endfor %}
+                                        </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+
+                Футер
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+</html>

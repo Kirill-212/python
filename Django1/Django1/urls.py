@@ -19,6 +19,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+
     url('riddles/', include('riddles.urls')),
     url('admin/', admin.site.urls),
 ]
