@@ -28,16 +28,13 @@ class Message(models.Model):
 
 
 class statistics(models.Model):
-    statistics_user = models.CharField(max_length=255, verbose_name='users')
+    statisticsUser = models.CharField(max_length=255, verbose_name='col_users')
 
     class Meta:
         abstract = True
 
 
-class stat_users(statistics):
-    name_user = models.CharField(max_length=255, verbose_name='Name users')
-
-
-
+class statistics_users(statistics):
+    name_user = models.CharField(max_length=255, verbose_name='name users')
 
 

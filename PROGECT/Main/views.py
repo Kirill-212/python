@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 
-from Main.models import currency, Message, annual_statistics,statistics_users
+from Main.models import currency, Message, annual_statistics, statistics_users
 
 from bs4 import BeautifulSoup
 import requests
@@ -62,27 +62,25 @@ def parse():
         return "Error"
 
 
-# def detail(request):
-
-#
-#     return render(
-#         request,
-#         "main.html",
-#         {
-#             "error_message": error_message,
-#             "latest_messages":
-#                 Message.objects.order_by('-pub_date')[:5]
-#         }
-#     )
 def index(request):
     # q = currunci.objects.all()
     # q.delete()
     i, j, k = parse()
     m = 0
-
+    txt = ''
+    col = 0
+    user_stat = statistics_users.objects.get(id=1)
+    for i in range(1, len(User.objects.all()) + 1):
+        user = User.objects.get(id=i)
+        txt += str(user)
+        txt+=','
+        col += 1
+    if txt != user_stat.name_user:
+        user_stat.name_user = txt
+        user_stat.statisticsUser = col
+    user_stat.save()
     for s in range(1, 26):
         number = currency.objects.get(id=s)
-        number.value = ''
         if number.value != k[m]:
             number.value = k[m]
         if number.value_name != j[m]:
@@ -95,7 +93,7 @@ def index(request):
     #     currency.objects.create(name_currency=i[s], value_name=j[s], value=k[s])
     ret_render = loader.get_template('C:/ycheba/python/python/PROGECT/Main/templates/base_main.html')
     i = currency.objects.order_by('-name_currency')
-    context = {'currency': i,"latest_messages":Message.objects.order_by('-pub_date')[:9]}
+    context = {'currency': i, "latest_messages": Message.objects.order_by('-pub_date')[:9],'user_stat':user_stat}
 
     return HttpResponse(ret_render.render(context, request))
 
@@ -154,22 +152,6 @@ def post(request):
     msg.pub_date = datetime.now()
     msg.save()
     return HttpResponseRedirect(app_url)
-
-
-# def detail(request):
-#     error_message = None
-#     if "error_message" in request.GET:
-#         error_message = request.GET["error_message"]
-#
-#     return render(
-#         request,
-#         "main.html",
-#         {
-#             "error_message": error_message,
-#             "latest_messages":
-#                 Message.objects.order_by('-pub_date')[:5]
-#         }
-#     )
 
 
 class HomeView(View):
@@ -234,7 +216,6 @@ class ChartDate(APIView):
     USD = USD1
     EUR = EUR1
 
-
     for s in range(1, 26):
         number = currency.objects.get(id=s)
         values.append(number.value)
@@ -250,6 +231,3 @@ class ChartDate(APIView):
             "USD": ChartDate.USD
         }
         return Response(date)
-
-
-

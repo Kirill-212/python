@@ -109,6 +109,11 @@
             <div class="row">
 
                 Футер
+                {% if user.is_superuser %}
+                    <br>
+                  Кол-во users  {{ user_stat.statisticsUser }}<br>
+                  users_name  {{ user_stat.name_user }}
+                {% endif %}
             </div>
         </div>
     </footer>
