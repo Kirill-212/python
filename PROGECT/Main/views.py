@@ -1,43 +1,39 @@
 from datetime import datetime
-
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-
-from Main.models import currency, Message, annual_statistics, statistics_users
-
-from bs4 import BeautifulSoup
+from django.contrib.auth.forms import PasswordChangeForm
 import requests
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.http import HttpResponseRedirect
 
-from django.contrib.auth import logout
-from django.contrib.auth.forms import PasswordChangeForm
-
-from django.http import JsonResponse
+from bs4 import BeautifulSoup
 from django.views.generic import View
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from django.http import JsonResponse
-import json
+from Main.models import currency, Message, annual_statistics, statistics_users
 
+# Link to the bank page.
 URL = 'http://www.nbrb.by/statistics/rates/ratesdaily.asp'
 
+# to simulate the operation of the browser.
 HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) '
                          'AppleWebKit/537.36 (KHTML, like Gecko) '
                          'Chrome/80.0.3987.122 Safari/537.36', 'accept': '*/*'}
 
 
+# Sending a request to the server.
 def get_html(url, params=None):
     r = requests.get(url, headers=HEADERS, params=params)
     return r
 
 
+# Extract data from html page.
 def get_content(html):
     soup = BeautifulSoup(html, 'html.parser')
     items = soup.find('tbody').find_all_next('tr')
@@ -53,6 +49,7 @@ def get_content(html):
     return name, currency_name_, value
 
 
+# Checking the sent request.
 def parse():
     html = get_html(URL)
     if html.status_code == 200:
@@ -62,6 +59,7 @@ def parse():
         return "Error"
 
 
+# Render of the main page. Checking data from the database and site and checking reg userus.
 def index(request):
     # q = currunci.objects.all()
     # q.delete()
@@ -70,15 +68,17 @@ def index(request):
     txt = ''
     col = 0
     user_stat = statistics_users.objects.get(id=1)
+
     for i in range(1, len(User.objects.all()) + 1):
         user = User.objects.get(id=i)
         txt += str(user)
-        txt+=','
+        txt += ','
         col += 1
     if txt != user_stat.name_user:
         user_stat.name_user = txt
         user_stat.statisticsUser = col
     user_stat.save()
+
     for s in range(1, 26):
         number = currency.objects.get(id=s)
         if number.value != k[m]:
@@ -87,20 +87,22 @@ def index(request):
             number.value_name = j[m]
         if number.name_currency != k[m]:
             number.name_currency = k[m]
-
     m += 1
     # for s in range(len(i)):
     #     currency.objects.create(name_currency=i[s], value_name=j[s], value=k[s])
     ret_render = loader.get_template('C:/ycheba/python/python/PROGECT/Main/templates/base_main.html')
     i = currency.objects.order_by('-name_currency')
-    context = {'currency': i, "latest_messages": Message.objects.order_by('-pub_date')[:9],'user_stat':user_stat}
+    context = {'currency': i, "latest_messages": Message.objects.order_by('-pub_date')[:9], 'user_stat': user_stat}
 
     return HttpResponse(ret_render.render(context, request))
 
 
+# Base URL of the application, the home page
+# often needed when specifying redirection paths.
 app_url = '/Main/'
 
 
+# Controller for registration.
 class RegisterFormView(FormView):
     form_class = UserCreationForm
     success_url = app_url + "login/"
@@ -111,6 +113,7 @@ class RegisterFormView(FormView):
         return super(RegisterFormView, self).form_valid(form)
 
 
+# Entry view.
 class LoginFormView(FormView):
     form_class = AuthenticationForm
     template_name = "reg/login.html"
@@ -122,12 +125,14 @@ class LoginFormView(FormView):
         return super(LoginFormView, self).form_valid(form)
 
 
+# To exit the user.
 class LogoutView(View):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect(app_url)
 
 
+# Password change view.
 class PasswordChangeView(FormView):
     form_class = PasswordChangeForm
     template_name = 'reg/password_change_form.html'
@@ -154,18 +159,14 @@ def post(request):
     return HttpResponseRedirect(app_url)
 
 
+# View for render charts.
 class HomeView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'charts.html', {})
 
 
-def get_data(request, *args, **kwargs):
-    date = {
-        "sales": 100
-    }
-    return JsonResponse(date)
-
-
+# Presentation for communication between applications.
+# Required to draw graphs.
 class ChartDate(APIView):
     a = []
     b = []

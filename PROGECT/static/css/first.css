@@ -1,0 +1,32 @@
+body{
+    background-color: white;
+    height: 100vh;
+}
+.btn__item{
+    margin-top: 40px;
+    justify-content: center;
+    width:100%;
+}
+.button{
+    border:1px solid black;
+    padding: 25px 30px;
+    color:white;
+
+    transition: .2s linear;
+}
+.button:hover{
+    background-color: #fff;
+    color:black;
+}
+.info__charts{
+    margin-right: 40px;
+
+}
+
+.chats{
+    background-color: dimgray;
+}
+
+button{
+    padding: 20px;
+}

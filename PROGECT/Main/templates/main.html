@@ -9,22 +9,23 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
      <script type="text/javascript" src="{% static 'js/first.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container bg-dark text-white">
-                 <div class="row">
-                     <div class="col-sm-3">
-                         <div id="_time">
-                         </div>
-                     </div>
-                     <div class="col-sm-6">
-                         <h3>
-                             Официальный курс белорусского рубля по отношению к иностранным валютам
-                         </h3>
-                     </div>
-                     <div class="col-sm-3">{% if user.is_authenticated %}
+            <div class="row">
+                <div class="col-sm-3 ">
+                    <!-- Time implementation in first.js -->
+                    <div id="_time" ></div>
+                </div>
+                <div class="col-sm-6">
+                    <h3>
+                        Официальный курс белорусского рубля по отношению к иностранным валютам
+                    </h3>
+                </div>
+                <div class="col-sm-3">
+                <!-- Authentication Check -->
+                    {% if user.is_authenticated %}
                 <p class="text-right">
                     Hello, {{ user.username }}
                     <a href="/Main/logout">Log out</a> |
@@ -32,93 +33,107 @@
                         Change password
                     </a>
                 </p>
-            {% else %}
+                    {% else %}
                 <p class="text-right">
                     <a href="/Main/login">Log in</a> |
                     <a href="/Main/register">Register</a>
                 </p>
-            {% endif %}
+                    {% endif %}
                 </div>
-                 </div>
             </div>
-
+        </div>
     </nav>
 
     <main class="main">
         <div class="container">
-
             <div class="row">
-                <div class="col-lg-1 order-lg-1 order-3">//новигация
-
+                <div class="info__charts col-lg-3 order-lg-1 order-3 table-dark">
+                    <a href="charts/">Графики изменения валюты</a>
+                    <img class="img-fluid" src="{% static 'image/first.jpg' %}">
+                    Термин «валюта» применяется в трояком понимании:
+                    Валюта — это денежная единица данной конкретной страны.
+                    Валюта — это иностранные денежные средства и расчетные единицы.
+                    Валюта — это международные расчетные единицы типа «евро», СДР и пр.
+                    Слово «валюта» вошло в широкий обиход только во второй половине XX века и обычно применяется
+                    только к действующим законным средствам платежа, существующим в формах наличных или безналичных
+                    денег. Так, древнеримский денарий не называют валютой, используя понятия «монета», «денежная
+                    единица». Термин «валюта» (как основная денежная единица государства) не тождественен понятию
+                    «деньги». Некоторые функции денег при определённых обстоятельствах могут выполнять некоторые
+                    товары (товарные деньги).
+                    Так, например, в Германии в первые годы после окончания Второй мировой войны, в Западной зоне
+                    оккупации на чёрном рынке роль денег играли американские сигареты.
+                    Код валюты — относительно короткая последовательность цифр и/или букв, используемая для
+                    представления наименования денежной единицы и её идентификации в различных системах передачи
+                    информации. Коды валют сгруппированы в классификаторы валют, которые, как правило, являются
+                    общемировыми, межгосударственными, национальными или отраслевыми стандартами.
+                    Общемировым стандартом является ISO 4217.
                 </div>
-                <div class="col-lg-8  col-md-8 order-lg-2 order-1">
+                <div class="col-lg-6  col-md-8 order-lg-2 order-1">
+                <!-- Block for registering, changing a password, entering, and outputting a table -->
                     {% block main %}
                     {% endblock %}
-
                 </div>
-                <div class="col-lg-3  col-md-4 order-lg-3 order-2 ">
-                                                <h4>Chat</h4>
-                                                {% if user.is_authenticated %}
-                                            <form action="post/" method="post">
-                                            {% csrf_token %}
-                                            <div class="input-group mb-3">
-                                              <input type="text"
-                                                     class="form-control"
-                                                     placeholder="Your message"
-                                                     name="message"/>
-                                              <div class="input-group-append">
-                                                <input class="btn btn-success"
-                                                        type="submit"
-                                                        value="Send"/>
-                                                              </div>
-                                                            </div>
-                                                        </form>
-                                                {% endif %}
-
-
-
-                                            <div id="history">
-                                            {% for message in latest_messages %}
-                                                <div class="card">
-                                                <div class="card-body">
-                                                    <strong>
-                                                        {{ message.author.username }}
-                                                    </strong>
-                                                    <br/>
-                                                    <em>
-                                                        {{ message.pub_date|date:'Y-m-d H:i:s' }}
-                                                    </em>
-                                                    <br/>
-                                                    {{ message.message }}
-                                                </div>
-                                                </div>
-                                                <br/>
-                                            {% endfor %}
-                                        </div>
-
-
-
+                <div class="col-lg-3  col-md-4 order-lg-3 order-2 text-dark table-dark">
+                <!-- Message Entry Form. -->
+                    <h4>forum</h4>
+                        {% if user.is_authenticated %}
+                         <form action="post/" method="post">
+                         {% csrf_token %}
+                             <div class="input-group mb-3">
+                                 <input type="text"
+                                    class="form-control"
+                                    placeholder="Your message"
+                                    name="message"/>
+                                 <div class="input-group-append">
+                                     <input class="btn btn-success btn-outline-dark"
+                                        type="submit" value="Send"/>
+                                 </div>
+                             </div>
+                         </form>
+                         {% endif %}
+                          <!-- Display 9 latest posts. -->
+                          <div id="history">
+                          {% for message in latest_messages %}
+                             <div class="card">
+                                <div class="card-body">
+                                   <strong>
+                                   {{ message.author.username }}
+                                    </strong>
+                                    <br/>
+                                    <em>
+                                    {{ message.pub_date|date:'Y-m-d H:i:s' }}
+                                    </em>
+                                     <br/>
+                                      {{ message.message }}
+                                </div>
+                             </div>
+                              <br/>
+                          {% endfor %}
+                          </div>
                 </div>
             </div>
-
         </div>
-
     </main>
-    <footer class="footer">
+    <footer class="footer table-dark">
         <div class="container">
             <div class="row">
-
-                Футер
-                {% if user.is_superuser %}
-                    <br>
+                <div class="col-lg-4">
+                    <img class="img-fluid" src="{% static 'image/arm.png' %}">
+                </div>
+                 <div class="col-lg-4">
+                    Национальный банк Республики Беларусь, 2000–2020
+                 </div>
+                 <div class="col-lg-4">
+                 <!-- Information for admin or admins. -->
+                 {% if user.is_superuser %}
+                 <br>
+                  <span style="font-size:xx-small">Информация является не 100%</span>
                   Кол-во users  {{ user_stat.statisticsUser }}<br>
                   users_name  {{ user_stat.name_user }}
-                {% endif %}
+                 {% endif %}
+                 </div>
             </div>
         </div>
     </footer>
-
-
 </body>
-
 </html>

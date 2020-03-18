@@ -1,7 +1,7 @@
 from django.urls import path
 
 from . import views
-from .views import index, HomeView, get_data, ChartDate
+from .views import index, HomeView, ChartDate
 
 urlpatterns = [
     path('', index),
@@ -11,7 +11,6 @@ urlpatterns = [
     path('password-change/', views.PasswordChangeView.as_view()),
     path('post/', views.post, name='post'),
     path('charts/', HomeView.as_view(), name='home'),
-    path('charts/api/date', get_data, name='api-date'),
     path('charts/chart/date', ChartDate.as_view()),
 
 
